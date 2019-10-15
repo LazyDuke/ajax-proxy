@@ -1,0 +1,64 @@
+{
+  "name": "@lzdk/ajax-proxy",
+  "version": "0.0.1",
+  "description": "Ajax hook written by es6 proxy.",
+  "main": "lib/index.min.js",
+  "module": "es/index.min.js",
+  "browser": "dist/index.min.js",
+  "types": "typings/index.d.ts",
+  "scripts": {
+    "build": "rimraf es/** && rimraf lib/** && rimraf dist/** && rimraf typings/** && rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LazyDuke/ajax-proxy.git"
+  },
+  "keywords": [
+    "ajax",
+    "typescript",
+    "proxy"
+  ],
+  "author": "Lazy Duke (weiguocai.fzu@gmail.com)",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "es",
+    "dist",
+    "typings"
+  ],
+  "bugs": {
+    "url": "https://github.com/LazyDuke/ajax-proxy/issues"
+  },
+  "homepage": "https://github.com/LazyDuke/ajax-proxy#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.4.0",
+    "@typescript-eslint/parser": "^2.4.0",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.merge": "^4.6.2",
+    "prettier": "^1.18.2",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.24.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-typescript2": "^0.24.3",
+    "typescript": "^3.6.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{d.ts,ts,tsx,js,jsx,css,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}

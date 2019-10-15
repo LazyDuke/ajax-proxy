@@ -1,0 +1,6 @@
+dist
+es
+lib
+/typings
+package-lock.json
+node_modules

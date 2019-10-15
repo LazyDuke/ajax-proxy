@@ -1,0 +1,5 @@
+*.config.js
+dist
+es
+lib
+node_modules
