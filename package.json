@@ -1,12 +1,14 @@
 {
   "name": "@lzdk/ajax-proxy",
   "version": "0.0.1",
-  "description": "Ajax hook written by es6 proxy.",
+  "description": "Ajax hook refactor by es6 proxy.",
   "main": "lib/index.min.js",
   "module": "es/index.min.js",
   "browser": "dist/index.min.js",
   "types": "typings/index.d.ts",
   "scripts": {
+    "mock": "json-server mock/db.json",
+    "test": "jest",
     "build": "rimraf es/** && rimraf lib/** && rimraf dist/** && rimraf typings/** && rollup -c"
   },
   "repository": {
@@ -31,12 +33,17 @@
   },
   "homepage": "https://github.com/LazyDuke/ajax-proxy#readme",
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-typescript": "^7.6.0",
     "@typescript-eslint/eslint-plugin": "^2.4.0",
     "@typescript-eslint/parser": "^2.4.0",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.0.9",
+    "jest": "^24.9.0",
+    "json-server": "^0.15.1",
     "lint-staged": "^9.4.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.merge": "^4.6.2",

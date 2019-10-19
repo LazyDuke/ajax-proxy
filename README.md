@@ -1,3 +1,3 @@
 # ajax-proxy
 
-Ajax hook
+Ajax hook refactor by es6 proxy.
