@@ -3,11 +3,10 @@
     [
       "@babel/preset-env",
       {
-        "targets": {
-          "node": "current"
-        }
+        "modules": false
       }
     ],
     "@babel/preset-typescript"
-  ]
+  ],
+  "plugins": ["@babel/proposal-class-properties"]
 }

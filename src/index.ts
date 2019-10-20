@@ -5,23 +5,6 @@
  * @class AjaxProxy
  */
 class AjaxProxy {
-  private _readyState: number
-  private _response: any
-  private _responseText: any
-  private _responseType: XMLHttpRequestResponseType
-  private _responseURL: string
-  private _responseXML: Document | null
-  private _status: number
-  private _statusText: string
-  private _timeout: number
-  private _upload: XMLHttpRequestUpload
-  private _withCredentials: boolean
-  private _DONE: number
-  private _HEADERS_RECEIVED: number
-  private _LOADING: number
-  private _OPENED: number
-  private _UNSENT: number
-
   private RealXMLHttpRequest: typeof XMLHttpRequest
   private revoke: () => void = () => {}
 
@@ -147,24 +130,30 @@ export interface ProxyMap {
   LOADING?: AttrProxy<number>
   DONE?: AttrProxy<number>
 
-  onreadystatechange?: (xhr: AjaxProxy) => void
-  onabort?: (xhr: AjaxProxy) => void
-  onerror?: (xhr: AjaxProxy) => void
-  onload?: (xhr: AjaxProxy) => void
-  onloadend?: (xhr: AjaxProxy) => void
-  onloadstart?: (xhr: AjaxProxy) => void
-  onprogress?: (xhr: AjaxProxy) => void
-  ontimeout?: (xhr: AjaxProxy) => void
+  onreadystatechange?: (xhr: XMLHttpRequest) => void
+  onabort?: (xhr: XMLHttpRequest) => void
+  onerror?: (xhr: XMLHttpRequest) => void
+  onload?: (xhr: XMLHttpRequest) => void
+  onloadend?: (xhr: XMLHttpRequest) => void
+  onloadstart?: (xhr: XMLHttpRequest) => void
+  onprogress?: (xhr: XMLHttpRequest) => void
+  ontimeout?: (xhr: XMLHttpRequest) => void
 
-  open?: (args: any[], xhr: AjaxProxy) => boolean | void | any
+  open?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
   abort?: (args: any[], xhr: AjaxProxy) => boolean | void | any
-  getAllResponseHeaders?: (args: any[], xhr: AjaxProxy) => boolean | void | any
-  getResponseHeader?: (args: any[], xhr: AjaxProxy) => boolean | void | any
-  overrideMimeType?: (args: any[], xhr: AjaxProxy) => boolean | void | any
-  send?: (args: any[], xhr: AjaxProxy) => boolean | void | any
-  setRequestHeader?: (args: any[], xhr: AjaxProxy) => boolean | void | any
-  addEventListener?: (args: any[], xhr: AjaxProxy) => boolean | void | any
-  removeEventListener?: (args: any[], xhr: AjaxProxy) => boolean | void | any
+  getAllResponseHeaders?: (
+    args: any[],
+    xhr: XMLHttpRequest
+  ) => boolean | void | any
+  getResponseHeader?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
+  overrideMimeType?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
+  send?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
+  setRequestHeader?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
+  addEventListener?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
+  removeEventListener?: (
+    args: any[],
+    xhr: XMLHttpRequest
+  ) => boolean | void | any
 }
 
 export interface AttrProxy<T> {
@@ -173,5 +162,5 @@ export interface AttrProxy<T> {
 }
 
 export interface SetGetFn<T> {
-  (this: XMLHttpRequest, value: T, xhr: AjaxProxy): T
+  (this: XMLHttpRequest, value: T, xhr: XMLHttpRequest): T
 }
