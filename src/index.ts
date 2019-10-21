@@ -141,7 +141,7 @@ export interface ProxyMap {
   ontimeout?: (xhr: FullWritableXMLHTTPRequest) => void
 
   open?: (args: any[], xhr: FullWritableXMLHTTPRequest) => boolean | void | any
-  abort?: (args: any[], xhr: AjaxProxy) => boolean | void | any
+  abort?: (args: any[], xhr: FullWritableXMLHTTPRequest) => boolean | void | any
   getAllResponseHeaders?: (
     args: any[],
     xhr: FullWritableXMLHTTPRequest
