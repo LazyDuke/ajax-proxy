@@ -32,7 +32,7 @@ class AjaxProxy {
                   : target[p]
                 const attrGetterProxy = (proxyMap[p] || {})['getter']
                 return (
-                  (attrGetterProxy &&
+                  (typeof attrGetterProxy === 'function' &&
                     attrGetterProxy.call(target, v, receiver)) ||
                   v
                 )
@@ -74,12 +74,13 @@ class AjaxProxy {
                 const attrSetterProxy = (proxyMap[p] || {})['setter']
                 try {
                   target[p] =
-                    (attrSetterProxy && attrSetterProxy(value, receiver)) ||
+                    (typeof attrSetterProxy === 'function' &&
+                      attrSetterProxy.call(target, value, receiver)) ||
                     (typeof value === 'function' ? value.bind(receiver) : value)
                 } catch (error) {
-                  if (attrSetterProxy === true) {
-                    that[`_${p.toString()}`] = value
-                  }
+                  attrSetterProxy === true
+                    ? (that[`_${p.toString()}`] = value)
+                    : console.error(error)
                 }
               }
             } catch (error) {
@@ -130,29 +131,41 @@ export interface ProxyMap {
   LOADING?: AttrProxy<number>
   DONE?: AttrProxy<number>
 
-  onreadystatechange?: (xhr: XMLHttpRequest) => void
-  onabort?: (xhr: XMLHttpRequest) => void
-  onerror?: (xhr: XMLHttpRequest) => void
-  onload?: (xhr: XMLHttpRequest) => void
-  onloadend?: (xhr: XMLHttpRequest) => void
-  onloadstart?: (xhr: XMLHttpRequest) => void
-  onprogress?: (xhr: XMLHttpRequest) => void
-  ontimeout?: (xhr: XMLHttpRequest) => void
+  onreadystatechange?: (xhr: FullWritableXMLHTTPRequest) => void
+  onabort?: (xhr: FullWritableXMLHTTPRequest) => void
+  onerror?: (xhr: FullWritableXMLHTTPRequest) => void
+  onload?: (xhr: FullWritableXMLHTTPRequest) => void
+  onloadend?: (xhr: FullWritableXMLHTTPRequest) => void
+  onloadstart?: (xhr: FullWritableXMLHTTPRequest) => void
+  onprogress?: (xhr: FullWritableXMLHTTPRequest) => void
+  ontimeout?: (xhr: FullWritableXMLHTTPRequest) => void
 
-  open?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
+  open?: (args: any[], xhr: FullWritableXMLHTTPRequest) => boolean | void | any
   abort?: (args: any[], xhr: AjaxProxy) => boolean | void | any
   getAllResponseHeaders?: (
     args: any[],
-    xhr: XMLHttpRequest
+    xhr: FullWritableXMLHTTPRequest
   ) => boolean | void | any
-  getResponseHeader?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
-  overrideMimeType?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
-  send?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
-  setRequestHeader?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
-  addEventListener?: (args: any[], xhr: XMLHttpRequest) => boolean | void | any
+  getResponseHeader?: (
+    args: any[],
+    xhr: FullWritableXMLHTTPRequest
+  ) => boolean | void | any
+  overrideMimeType?: (
+    args: any[],
+    xhr: FullWritableXMLHTTPRequest
+  ) => boolean | void | any
+  send?: (args: any[], xhr: FullWritableXMLHTTPRequest) => boolean | void | any
+  setRequestHeader?: (
+    args: any[],
+    xhr: FullWritableXMLHTTPRequest
+  ) => boolean | void | any
+  addEventListener?: (
+    args: any[],
+    xhr: FullWritableXMLHTTPRequest
+  ) => boolean | void | any
   removeEventListener?: (
     args: any[],
-    xhr: XMLHttpRequest
+    xhr: FullWritableXMLHTTPRequest
   ) => boolean | void | any
 }
 
@@ -163,4 +176,21 @@ export interface AttrProxy<T> {
 
 export interface SetGetFn<T> {
   (this: XMLHttpRequest, value: T, xhr: XMLHttpRequest): T
+}
+
+export type FullWritableXMLHTTPRequest = XMLHttpRequestUpload & WtritableAttrs
+export interface WtritableAttrs {
+  readyState: number
+  response: any
+  responseText: string
+  responseURL: string
+  responseXML: Document | null
+  status: number
+  statusText: string
+  upload: XMLHttpRequestUpload
+  DONE: number
+  HEADERS_RECEIVED: number
+  LOADING: number
+  OPENED: number
+  UNSENT: number
 }
