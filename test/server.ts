@@ -52,21 +52,43 @@ export default app.listen(port, () => {
 })
 
 function registerBaseRouter() {
-  const BASE_DATA = [
-    {
-      id: 1,
-      data: 'This is data 1'
-    },
-    {
-      id: 2,
-      data: 'This is data 2'
-    },
-    {
-      id: 3,
-      data: 'This is data 3'
-    }
-  ]
+  const BASE_DATA = {
+    data: [
+      {
+        id: 1,
+        data: 'This is data 1'
+      },
+      {
+        id: 2,
+        data: 'This is data 2'
+      },
+      {
+        id: 3,
+        data: 'This is data 3'
+      }
+    ]
+  }
+  function generateBaseData(method: 'GET' | 'POST'): BaseData {
+    return Object.assign(BASE_DATA, {
+      method
+    })
+  }
+
   router.get('/base', function(req, res) {
-    res.json(BASE_DATA)
+    res.json(generateBaseData('GET'))
   })
+
+  router.post('/base', function(req, res) {
+    res.json(generateBaseData('POST'))
+  })
+}
+
+interface BaseData {
+  method: 'GET' | 'POST'
+  data: Data[]
+}
+
+interface Data {
+  id: number
+  data: string
 }

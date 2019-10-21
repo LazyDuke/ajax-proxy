@@ -17,6 +17,7 @@ const config: webpack.Configuration = {
     filename: '[name].js',
     publicPath: '/__build__/'
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {

@@ -8,5 +8,8 @@
     ],
     "@babel/preset-typescript"
   ],
-  "plugins": ["@babel/proposal-class-properties"]
+  "plugins": [
+    "@babel/proposal-class-properties",
+    "@babel/plugin-transform-runtime"
+  ]
 }
