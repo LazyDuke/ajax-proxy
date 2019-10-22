@@ -1,12 +1,14 @@
-const typescript = require('rollup-plugin-typescript2')
-const resolve = require('rollup-plugin-node-resolve')
-const commonjs = require('rollup-plugin-commonjs')
-const { terser } = require('rollup-plugin-terser')
-const json = require('rollup-plugin-json')
-const merge = require('lodash.merge')
-const cloneDeep = require('lodash.clonedeep')
-const path = require('path')
-const pkg = require('./package.json')
+import cloneDeep from 'lodash.clonedeep'
+import merge from 'lodash.merge'
+import path from 'path'
+import commonjs from 'rollup-plugin-commonjs'
+import json from 'rollup-plugin-json'
+import resolve from 'rollup-plugin-node-resolve'
+import { terser } from 'rollup-plugin-terser'
+import typescript2 from 'rollup-plugin-typescript2'
+import typescript from 'typescript'
+
+import pkg from './package.json'
 
 const minOutputs = [
   {
@@ -36,8 +38,8 @@ const common = {
       include: /.\/node_modules/
     }),
     json(),
-    typescript({
-      typescript: require('typescript'),
+    typescript2({
+      typescript,
       useTsconfigDeclarationDir: true,
       clean: true
     })

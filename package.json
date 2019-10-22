@@ -9,7 +9,7 @@
   "scripts": {
     "mock": "json-server mock/db.json",
     "test": "ts-node test/server.ts",
-    "build": "rimraf es/** && rimraf lib/** && rimraf dist/** && rimraf typings/** && rollup -c"
+    "build": "rimraf es/** && rimraf lib/** && rimraf dist/** && rimraf typings/** && rollup -c rollup.config.ts"
   },
   "repository": {
     "type": "git",
@@ -41,7 +41,10 @@
     "@types/body-parser": "^1.17.1",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.1",
+    "@types/lodash.clonedeep": "^4.5.6",
+    "@types/lodash.merge": "^4.6.6",
     "@types/node": "^12.11.1",
+    "@types/rollup-plugin-json": "^3.0.2",
     "@types/webpack": "^4.39.4",
     "@types/webpack-dev-middleware": "^2.0.3",
     "@types/webpack-env": "^1.14.1",
