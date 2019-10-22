@@ -75,6 +75,11 @@ function registerBaseRouter() {
   }
 
   router.get('/base', function(req, res) {
+    Object.keys(req.headers).forEach(headerKey => {
+      if (/header/.test(headerKey)) {
+        res.setHeader(headerKey, req.headers[headerKey])
+      }
+    })
     res.json(generateBaseData('GET'))
   })
 
