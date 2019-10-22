@@ -46,10 +46,13 @@ class AjaxProxy {
                     return
                   }
                   if (result) {
-                    newArgs = result
+                    newArgs =
+                      typeof result === 'function'
+                        ? result.call(target, ...args)
+                        : result
                   }
                 }
-                target[p].call(target, ...newArgs)
+                return target[p].call(target, ...newArgs)
               }
             } catch (error) {
               console.error(error)
@@ -78,14 +81,15 @@ class AjaxProxy {
                       attrSetterProxy.call(target, value, receiver)) ||
                     (typeof value === 'function' ? value.bind(receiver) : value)
                 } catch (error) {
-                  attrSetterProxy === true
-                    ? (that[`_${p.toString()}`] = value)
-                    : console.error(error)
+                  if (attrSetterProxy === true) {
+                    that[`_${p.toString()}`] = value
+                  } else {
+                    throw error
+                  }
                 }
               }
             } catch (error) {
-              console.error(error)
-              target[p] = value
+              throw error
             }
             return true
           }
