@@ -2,6 +2,8 @@ import ajaxProxy from '../../src/index'
 
 const { proxyAjax, unProxyAjax } = ajaxProxy
 
+const TEST_URL = 'http://localhost:8080/base'
+
 sumTestCase()
 
 async function sumTestCase() {
@@ -12,7 +14,8 @@ async function sumTestCase() {
   try {
     await testCase4()
   } catch (error) {
-    console.error('case 4.拦截 open 方法，并终止:', error.message)
+    console.log('case 4.拦截 open 方法，并终止:')
+    console.error(error.message)
   }
   await testCase5()
   await testCase6()
@@ -22,25 +25,26 @@ async function sumTestCase() {
   try {
     await testCase10()
   } catch (error) {
-    console.error('case 10.不传参数(undefined):', error.message)
+    console.log('case 10.不传参数(undefined):')
+    console.error(error.message)
   }
   try {
     await testCase11()
   } catch (error) {
-    console.error('case 11.传参数 null:', error.message)
+    console.log('case 11.传参数 null:')
+    console.error(error.message)
   }
   try {
     await testCase12()
   } catch (error) {
-    console.error('case 12.改变 XMLHttpRequest 的内建方法:', error.message)
+    console.log('case 12.改变 XMLHttpRequest 的内建方法:')
+    console.error(error.message)
   }
   try {
     await testCase13()
   } catch (error) {
-    console.error(
-      'case 13. 设置 response 不可改变后，拦截 response 属性并修改:',
-      error.message
-    )
+    console.log('case 13. 设置 response 不可改变后，拦截 response 属性并修改:')
+    console.error(error.message)
   }
 }
 
@@ -56,7 +60,7 @@ async function testCase0() {
       resolve()
     }
 
-    pureXhr.open('GET', 'http://localhost:8080/base', true)
+    pureXhr.open('GET', TEST_URL, true)
 
     pureXhr.send()
   })
@@ -75,7 +79,7 @@ async function testCase1() {
 
     let proxyedXhr = new XMLHttpRequest()
 
-    proxyedXhr.open('GET', 'http://localhost:8080/base', true)
+    proxyedXhr.open('GET', TEST_URL, true)
 
     proxyedXhr.onload = function() {
       unProxyAjax()
@@ -89,7 +93,6 @@ async function testCase1() {
  * case 2.拦截 open 方法，改变传参
  */
 async function testCase2() {
-  ;``
   return new Promise(resolve => {
     proxyAjax({
       open: function(args, xhr) {
@@ -99,7 +102,7 @@ async function testCase2() {
 
     let proxyedXhr = new XMLHttpRequest()
 
-    proxyedXhr.open('GET', 'http://localhost:8080/base', true)
+    proxyedXhr.open('GET', TEST_URL, true)
 
     proxyedXhr.onload = function() {
       console.log('case 2.拦截 open 方法，改变传参: ', this.response)
@@ -133,7 +136,7 @@ async function testCase3() {
 
     let proxyedXhr = new XMLHttpRequest()
 
-    proxyedXhr.open('GET', 'http://localhost:8080/base', true)
+    proxyedXhr.open('GET', TEST_URL, true)
 
     proxyedXhr.setRequestHeader('header1', 'header1')
     proxyedXhr.setRequestHeader('header2', 'header2')
@@ -186,7 +189,7 @@ async function testCase4() {
 
     let proxyedXhr = new XMLHttpRequest()
 
-    proxyedXhr.open('GET', 'http://localhost:8080/base', true)
+    proxyedXhr.open('GET', TEST_URL, true)
 
     proxyedXhr.onload = function() {
       resolve()
@@ -214,7 +217,7 @@ async function testCase5() {
 
     let proxyedXhr = new XMLHttpRequest()
 
-    proxyedXhr.open('GET', 'http://localhost:8080/base', true)
+    proxyedXhr.open('GET', TEST_URL, true)
 
     proxyedXhr.onload = function() {
       console.log('       拦截 onload 事件: onload triggered')
@@ -242,7 +245,7 @@ async function testCase6() {
 
     let proxyedXhr = new XMLHttpRequest()
 
-    proxyedXhr.open('GET', 'http://localhost:8080/base', true)
+    proxyedXhr.open('GET', TEST_URL, true)
 
     proxyedXhr.onload = function() {
       console.log(
@@ -273,7 +276,7 @@ async function testCase7() {
 
     let proxyedXhr = new XMLHttpRequest()
 
-    proxyedXhr.open('GET', 'http://localhost:8080/base', true)
+    proxyedXhr.open('GET', TEST_URL, true)
 
     proxyedXhr.onreadystatechange = function() {}
 
@@ -309,7 +312,7 @@ async function testCase8() {
       resolve()
     }
 
-    proxyedXhr.open('GET', 'http://localhost:8080/base', true)
+    proxyedXhr.open('GET', TEST_URL, true)
 
     proxyedXhr.send()
   })
@@ -336,7 +339,7 @@ async function testCase9() {
       resolve()
     }
 
-    proxyedXhr.open('GET', 'http://localhost:8080/base', true)
+    proxyedXhr.open('GET', TEST_URL, true)
 
     proxyedXhr.timeout = 500
 
@@ -412,7 +415,7 @@ async function testCase13() {
 
     let proxyedXhr = new XMLHttpRequest()
 
-    proxyedXhr.open('GET', 'http://localhost:8080/base', true)
+    proxyedXhr.open('GET', TEST_URL, true)
 
     proxyedXhr.onload = function() {
       unProxyAjax()
