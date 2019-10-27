@@ -191,14 +191,10 @@ async function testCase4() {
 
     proxyedXhr.open('GET', TEST_URL, true)
 
-    proxyedXhr.onload = function() {
-      resolve()
-    }
-
     try {
       proxyedXhr.send()
-      unProxyAjax()
     } catch (error) {
+      unProxyAjax()
       reject(error)
     }
   })

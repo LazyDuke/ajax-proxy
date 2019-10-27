@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 import ajaxProxy from '../../src/index'
 
 const { proxyAjax, unProxyAjax } = ajaxProxy
@@ -279,7 +280,7 @@ async function testCase11() {
           xhr.response = '{"proxyed": true}'
         } catch (error) {
           console.log(
-            'case 11. 设置 response 不可改变后，拦截 response 属性并修改:'
+            'case 11.设置 response 不可改变后，拦截 response 属性并修改:'
           )
           console.error(error.message)
         }
