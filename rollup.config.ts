@@ -47,7 +47,19 @@ const common = {
 }
 
 const minCommon = merge(cloneDeep(common), {
-  plugins: common.plugins.concat(terser())
+  plugins: common.plugins.slice(0, common.plugins.length - 1).concat(
+    typescript2({
+      typescript,
+      useTsconfigDeclarationDir: true,
+      tsconfigOverride: {
+        compilerOptions: {
+          removeComments: true
+        }
+      },
+      clean: true
+    }),
+    terser()
+  )
 })
 
 module.exports = minOutputs
