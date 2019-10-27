@@ -6,6 +6,7 @@
  */
 class AjaxProxy {
   private RealXMLHttpRequest: typeof XMLHttpRequest
+  private realXMLHttpRequest: XMLHttpRequest
   private revoke: () => void = () => {}
 
   public proxyAjax = (proxyMap: ProxyMap) => {
@@ -15,6 +16,8 @@ class AjaxProxy {
 
     this.RealXMLHttpRequest =
       this.RealXMLHttpRequest || window['XMLHttpRequest']
+    this.realXMLHttpRequest =
+      this.realXMLHttpRequest || new window['XMLHttpRequest']()
 
     const that = this
 
@@ -62,34 +65,35 @@ class AjaxProxy {
           set(target, p, value, receiver) {
             let type = ''
             try {
-              type = typeof target[p]
-              if (type === 'function') {
-                throw new Error(
-                  `${p.toString()} in XMLHttpRequest can not be reseted`
-                )
-              }
-
-              if (typeof proxyMap[p] === 'function') {
-                target[p] = () => {
-                  proxyMap[p].call(target, receiver) || value.call(receiver)
-                }
-              } else {
-                const attrSetterProxy = (proxyMap[p] || {})['setter']
-                try {
-                  target[p] =
-                    (typeof attrSetterProxy === 'function' &&
-                      attrSetterProxy.call(target, value, receiver)) ||
-                    (typeof value === 'function' ? value.bind(receiver) : value)
-                } catch (error) {
-                  if (attrSetterProxy === true) {
-                    that[`_${p.toString()}`] = value
-                  } else {
-                    throw error
-                  }
-                }
-              }
+              type = typeof that.realXMLHttpRequest[p]
             } catch (error) {
-              throw error
+              console.error(error)
+            }
+
+            if (type === 'function') {
+              throw new Error(
+                `${p.toString()} in XMLHttpRequest can not be reseted`
+              )
+            }
+
+            if (typeof proxyMap[p] === 'function') {
+              target[p] = () => {
+                proxyMap[p].call(target, receiver) || value.call(receiver)
+              }
+            } else {
+              const attrSetterProxy = (proxyMap[p] || {})['setter']
+              try {
+                target[p] =
+                  (typeof attrSetterProxy === 'function' &&
+                    attrSetterProxy.call(target, value, receiver)) ||
+                  (typeof value === 'function' ? value.bind(receiver) : value)
+              } catch (error) {
+                if (attrSetterProxy === true) {
+                  that[`_${p.toString()}`] = value
+                } else {
+                  throw error
+                }
+              }
             }
             return true
           }
