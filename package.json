@@ -7,7 +7,6 @@
   "browser": "dist/index.min.js",
   "types": "typings/index.d.ts",
   "scripts": {
-    "mock": "json-server mock/db.json",
     "test": "ts-node test/server.ts",
     "build": "rimraf es/** && rimraf lib/** && rimraf dist/** && rimraf typings/** && rollup -c rollup.config.ts"
   },
