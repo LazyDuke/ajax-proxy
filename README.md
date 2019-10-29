@@ -93,14 +93,70 @@ ajax-proxy 使用起来十分简单，只有两个方法 **proxyAjax** 和 **unP
   })
   ```
 
-  - 方法：`open`, `send`... 以上可以通过对 **读** 的操作进行代理。**注意：
+  - 方法：`open`, `send`... 以上可以通过对 **读** 的操作进行代理。\*\*注意：
     1、参数中 `args` 是一个数组，数组的内容是其对应的原生方法的参数列表，`xhr` 是代理后的对象，而 `this` 则是 被代理的原始对象（如果不使用箭头函数）。
-    2、代理方法的返回值如果是 `true` ，则可对方法进行终止，如果是一个对象或者方法，则当做新参数传入其对应的原生方法。**
+
+    2、代理方法的返回值如果是 `true` ，则可对方法进行终止，如果是一个对象或者方法，则当做新参数传入其对应的原生方法。\*\*
+
     - 代理 `open` 方法
+
+    ```javascript
+    proxyAjax({
+      open: function(args, xhr) {
+        // 进行一些代理操作
+      }
+    })
+    ```
+
+    - 代理 `open` 方法，并终止
+
+    ```javascript
+    proxyAjax({
+      open: function(args, xhr) {
+        // 进行一些代理操作
+        return true
+      }
+    })
+    ```
+
+    - 代理 `open` 方法，传入新的参数
+
+    ```javascript
+    proxyAjax({
+      open: function(args, xhr) {
+        // 进行一些代理操作
+        function changeArgs(args) {
+          // change args
+        }
+        return changeArgs(args)
+        // 也支持返回方法
+        // return changeArgs
+      }
+    })
+    ```
+
+  - 请求的上下文管理
+    > 假设对于同一个请求，你需要在其 `open` 的拦截函数和 `onload` 回调中共享一个变量，但由于拦截的是全局 XMLHttpRequest 对象，所有网络请求会无次序的走到拦截的方法中，这时你可以通过 `xhr` 来对应请求的上下文信息。在上述场景中，你可以在 `open` 拦截函数中给 `xhr` 设置一个属性，然后在 `onload` 回调中获取即可。
+    ```javascript
+    proxyAjax({
+      open: function(args, xhr) {
+        xhr.xxx = '...'
+      },
+      onload: function(xhr) {
+        xhr.xxx // ‘...’
+      }
+    })
+    ```
 
 #### unProxyAjax
 
 - 取消代理：取消对原生 XMLHttpRequest 对象的代理
+
+## 注意
+
+- 对于属性代理，为了避免循环调用导致的栈溢出，不可以在其 getter 拦截器中再读取其同名属性或在其 setter 拦截器中在给其同名属性赋值，需要在原有属性上进行改动是请对 this.xxx 进行操作。
+
+- 本库需要在支持 ES6 的浏览器环境中运行，依赖特性 Proxy。
 
 ## 感谢
 

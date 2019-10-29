@@ -1,6 +1,6 @@
 {
   "name": "@lazyduke/ajax-proxy",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Ajax proxy which intercepts XMLHTTPRequest refactor by es6 Proxy.",
   "main": "lib/index.min.js",
   "module": "es/index.min.js",
