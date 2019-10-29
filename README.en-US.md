@@ -10,7 +10,7 @@ ajax-proxy is a repo which intercepts XMLHTTPRequest refactor by es6 Proxy.
 
 ## Usage
 
-### Install
+### Installation
 
 - Using CDN
 
@@ -157,6 +157,18 @@ ajax-proxy is very easy to use, it has only two methods called **proxyAjax** and
 
 - As for intercepting property, do not try to get access to any property of `xhr` in getter function as well as doing some assignment in setter function，just do all this operation in `this`.
 - This repo require browser environment which support ES6 and Proxy object.
+
+## Contributing
+
+1.  Clone repo
+2.  Type these in CMD
+
+    ```shell
+    npm install
+    npm test
+    ```
+
+    to get started
 
 ## Credits
 

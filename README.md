@@ -158,6 +158,18 @@ ajax-proxy 使用起来十分简单，只有两个方法 **proxyAjax** 和 **unP
 
 - 本库需要在支持 ES6 的浏览器环境中运行，依赖特性 Proxy。
 
+## 贡献
+
+1.  将代码 clone 到本地
+2.  在命令行中依次输入
+
+    ```shell
+    npm install
+    npm test
+    ```
+
+    进行调试
+
 ## 感谢
 
 在看 [Ajax-hook 原理解析](http://www.jianshu.com/p/7337ac624b8e) 时，受到 [Ajax-hook](https://github.com/wendux/Ajax-hook) 的启发，从脑中冒出可以用 Proxy 实现的想法，再到着手开发实现，加入些许新功能，一气呵成。
