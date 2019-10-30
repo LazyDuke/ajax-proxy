@@ -9,8 +9,6 @@ class AjaxProxy {
   private RealXMLHttpRequest: typeof XMLHttpRequest
   // 缓存原生的 XMLHttpRequest 对象实例 用来后续的 setter 里的 type 检查
   private realXMLHttpRequest: XMLHttpRequest
-  // 缓存取消代理的方法
-  private revoke: () => void = () => {}
 
   /**
    * @description 代理 Ajax 的方法，调用这个方法开始代理原生 XMLHttpRequest 对象
@@ -34,7 +32,7 @@ class AjaxProxy {
     const that = this
 
     // 代理 XMLHttpRequest 对象
-    const { proxy, revoke } = Proxy.revocable(this.RealXMLHttpRequest, {
+    const proxy = new Proxy(this.RealXMLHttpRequest, {
       // 代理 new 操作符
       construct(Target) {
         const xhr = new Target()
@@ -132,7 +130,6 @@ class AjaxProxy {
     })
 
     window['XMLHttpRequest'] = proxy
-    this.revoke = revoke
     return this.RealXMLHttpRequest
   }
 
@@ -143,8 +140,6 @@ class AjaxProxy {
    * @returns
    */
   public unProxyAjax = () => {
-    this.revoke()
-    this.revoke = () => {}
     if (this.RealXMLHttpRequest) {
       window['XMLHttpRequest'] = this.RealXMLHttpRequest
     }
