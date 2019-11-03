@@ -26,6 +26,10 @@ ajax-proxy 是一个用 ES6 中 Proxy 特性实现的用于代理原生对象 XM
 npm install @lazyduke/ajax-proxy
 ```
 
+### 指南
+
+[基于 ES6 的 Proxy ，100 行代码实现一个 XMLHttpRequest 的拦截核心 ajax-proxy](https://juejin.im/post/5db85842f265da4d1f51bbda)
+
 ### API
 
 ajax-proxy 使用起来十分简单，只有两个方法 **proxyAjax** 和 **unProxyAjax**，只要你对 XMLHttpRequest 有所了解，就能很快上手使用。

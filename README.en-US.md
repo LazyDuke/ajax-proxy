@@ -26,6 +26,10 @@ ajax-proxy is a repo which intercepts XMLHTTPRequest refactor by es6 Proxy.
   npm install @lazyduke/ajax-proxy
   ```
 
+### Guide
+
+[基于 ES6 的 Proxy ，100 行代码实现一个 XMLHttpRequest 的拦截核心 ajax-proxy](https://juejin.im/post/5db85842f265da4d1f51bbda)
+
 ### API
 
 ajax-proxy is very easy to use, it has only two methods called **proxyAjax** and **unProxyAjax**, you can get started quickly as long as you know of XMLHttpRequest.
