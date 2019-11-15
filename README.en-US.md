@@ -94,7 +94,7 @@ ajax-proxy is very easy to use, it has only two methods called **proxyAjax** and
   ```javascript
   proxyAjax({
     onload: function(xhr) {
-      // 进行一些代理操作
+      // do some intercepting
     }
   })
   ```
