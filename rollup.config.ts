@@ -21,7 +21,7 @@ const minOutputs = [
   },
   {
     name: 'ajaxProxy',
-    file: pkg.browser,
+    file: './dist/index.min.js',
     format: 'umd'
   }
 ]
