@@ -4,7 +4,6 @@
   "description": "Ajax proxy which intercepts XMLHTTPRequest refactor by es6 Proxy.",
   "main": "lib/index.min.js",
   "module": "es/index.min.js",
-  "browser": "dist/index.min.js",
   "types": "typings/index.d.ts",
   "scripts": {
     "test": "ts-node test/server.ts",
