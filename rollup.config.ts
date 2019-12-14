@@ -1,5 +1,3 @@
-import cloneDeep from 'lodash.clonedeep'
-import merge from 'lodash.merge'
 import path from 'path'
 import commonjs from 'rollup-plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
@@ -27,9 +25,10 @@ const minOutputs = [
   }
 ]
 
-const outputs = cloneDeep(minOutputs).map(output =>
-  merge(output, { file: output.file.replace('.min', '') })
-)
+const outputs = minOutputs.map(minOutput => ({
+  ...minOutput,
+  file: minOutput.file.replace('.min', '')
+}))
 
 const common = {
   input: path.resolve(__dirname, './src/index.ts'),
@@ -47,7 +46,8 @@ const common = {
   ]
 }
 
-const minCommon = merge(cloneDeep(common), {
+const minCommon = {
+  ...common,
   plugins: common.plugins.slice(0, common.plugins.length - 1).concat(
     typescript2({
       typescript,
@@ -61,8 +61,16 @@ const minCommon = merge(cloneDeep(common), {
     }),
     terser()
   )
-})
+}
 
-module.exports = minOutputs
-  .map(minOutput => merge({ output: minOutput }, minCommon))
-  .concat(outputs.map(output => merge({ output }, common)))
+export default minOutputs
+  .map(minOutput => ({
+    output: minOutput,
+    ...minCommon
+  }))
+  .concat(
+    outputs.map(output => ({
+      output,
+      ...common
+    }))
+  )
