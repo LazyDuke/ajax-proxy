@@ -2,11 +2,12 @@ import cloneDeep from 'lodash.clonedeep'
 import merge from 'lodash.merge'
 import path from 'path'
 import commonjs from 'rollup-plugin-commonjs'
-import json from 'rollup-plugin-json'
-import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 import typescript2 from 'rollup-plugin-typescript2'
 import typescript from 'typescript'
+
+import json from '@rollup/plugin-json'
+import resolve from '@rollup/plugin-node-resolve'
 
 import pkg from './package.json'
 
